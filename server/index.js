@@ -2,12 +2,15 @@ const express = require('express');
 const monk = require('monk');
 const cors = require('cors');
 const Filter = require('bad-words');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
-const db = monk('localhost/chater');
+const db = monk(process.env.MONGO_URI || 'localhost/chater');
 const comments = db.get('comments');
 const filter = new Filter();
+
+app.enable('trust proxy');
 
 app.use(cors());
 app.use(express.json());
@@ -22,6 +25,13 @@ app.get('/', (req, res) => {
 app.get('/comments', (req, res) => {
   comments.find().then(posts => res.json(posts));
 });
+
+app.use(
+  rateLimit({
+    windowMs: 30000,
+    max: 1,
+  })
+);
 
 // checks if comment is valid
 const isValid = comment => {
