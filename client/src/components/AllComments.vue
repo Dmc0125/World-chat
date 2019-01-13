@@ -1,10 +1,11 @@
 <template>
   <div class="comments">
     <Comment
-      v-for="{ _id, name, message } in comments"
+      v-for="{ _id, name, message, createdAt } in comments"
       v-bind:key="_id"
       v-bind:name="name"
       v-bind:message="message"
+      v-bind:created="createdAt"
     />
   </div>
 </template>
