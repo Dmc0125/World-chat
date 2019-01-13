@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header v-bind:title="title"/>
-    <PostComment v-on:post="postComment"/>
+    <PostComment v-if="showPost" v-bind:postComment="postComment"/>
   </div>
 </template>
 
@@ -20,13 +20,62 @@ export default {
   data() {
     return {
       title: "WorldChat",
+      API_URL:
+        window.location.hostname === "localhost"
+          ? "http://localhost:5000/comments"
+          : "",
+      showPost: true,
       comments: []
     };
   },
   methods: {
     postComment(e) {
-      console.log(123);
+      const data = new FormData(e.target);
+      const name = data.get("name");
+      const message = data.get("message");
+
+      if (name.trim().length < 3 || message.trim().length < 3) {
+        // console.log("You must import message and name");
+      } else {
+        const comment = {
+          name,
+          message
+        };
+
+        fetch(this.API_URL, {
+          method: "POST",
+          body: JSON.stringify(comment),
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .catch(err => console.log(err))
+          .then(() => {
+            this.getComments();
+          });
+
+        setTimeout(() => {
+          this.showPost = true;
+        }, 15000);
+
+        e.target.reset();
+      }
+    },
+    async getComments() {
+      try {
+        const { data } = await axios.get(this.API_URL);
+
+        data.forEach(comment => {
+          this.comments.push(comment);
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
+  },
+  mounted() {
+    this.getComments();
   }
 };
 </script>

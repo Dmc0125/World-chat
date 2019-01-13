@@ -2,7 +2,7 @@
   <div class="container">
     <h2>Post a comment</h2>
 
-    <form @submit.prevent="$emit('post')">
+    <form @submit.prevent="postComment">
       <input type="text" name="name" id="name" placeholder="Write your name...">
       <textarea name="message" id="message" placeholder="Message..."></textarea>
       <button type="submit">Post</button>
