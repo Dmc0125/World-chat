@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <Header v-bind:title="title"/>
-    <PostComment v-if="showPost" v-bind:postComment="postComment"/>
+    <PostComment v-bind:isInactive="isInactive" v-bind:postComment="postComment"/>
+    <AllComments v-bind:comments="comments"/>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import PostComment from "./components/PostComment.vue";
+import AllComments from "./components/AllComments.vue";
 
 import axios from "axios";
 
@@ -15,7 +17,8 @@ export default {
   name: "app",
   components: {
     Header,
-    PostComment
+    PostComment,
+    AllComments
   },
   data() {
     return {
@@ -24,7 +27,7 @@ export default {
         window.location.hostname === "localhost"
           ? "http://localhost:5000/comments"
           : "",
-      showPost: true,
+      isInactive: false,
       comments: []
     };
   },
@@ -53,10 +56,11 @@ export default {
           .catch(err => console.log(err))
           .then(() => {
             this.getComments();
+            this.isInactive = true;
           });
 
         setTimeout(() => {
-          this.showPost = true;
+          this.isInactive = false;
         }, 15000);
 
         e.target.reset();
@@ -65,10 +69,8 @@ export default {
     async getComments() {
       try {
         const { data } = await axios.get(this.API_URL);
-
-        data.forEach(comment => {
-          this.comments.push(comment);
-        });
+        const allComments = data.map(comment => comment);
+        this.comments = [...allComments.reverse()];
       } catch (err) {
         console.log(err);
       }

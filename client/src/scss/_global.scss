@@ -1,5 +1,7 @@
 $primary: rgb(85, 207, 255);
 $grey: rgb(214, 214, 214);
+$lighter-prim: lighten($color: $primary, $amount: 15%);
+$lighter-grey: lighten($color: $grey, $amount: 7%);
 
 @mixin small() {
   @media only screen and (max-width: 320px) {

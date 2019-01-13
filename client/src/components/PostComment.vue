@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-bind:class="{ inactive: isInactive }">
     <h2>Post a comment</h2>
 
     <form @submit.prevent="postComment">
@@ -7,6 +7,8 @@
       <textarea name="message" id="message" placeholder="Message..."></textarea>
       <button type="submit">Post</button>
     </form>
+
+    <div class="line"></div>
   </div>
 </template>
 
@@ -14,7 +16,8 @@
 export default {
   name: "PostComment",
   props: {
-    postComment: Function
+    postComment: Function,
+    isInactive: Boolean
   }
 };
 </script>
@@ -22,8 +25,8 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 50%;
-  height: 500px;
-  margin: 50px auto 0;
+  height: fit-content;
+  margin: 50px auto 25px;
 }
 
 h2 {
@@ -71,6 +74,33 @@ button {
     background-color: $primary;
     border: 0;
     color: #fff;
+  }
+}
+
+.line {
+  height: 2px;
+  width: 100%;
+  background-color: $grey;
+  margin-top: 25px;
+}
+
+// INACTIVE FORM
+
+.inactive {
+  input,
+  textarea {
+    pointer-events: none;
+    border: $lighter-grey 2px solid;
+  }
+
+  button {
+    pointer-events: none;
+    border: $lighter-prim 2px solid;
+    color: $lighter-prim;
+  }
+
+  ::placeholder {
+    color: $lighter-grey;
   }
 }
 
