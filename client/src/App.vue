@@ -24,9 +24,9 @@ export default {
     return {
       title: "WorldChat",
       API_URL:
-        window.location.hostname === "localhost"
-          ? "http://localhost:5000/comments"
-          : "",
+        // window.location.hostname === "localhost"
+        //   ? "http://localhost:5000"
+           "https://api-world-chat.now.sh",
       isInactive: false,
       comments: []
     };
@@ -45,7 +45,7 @@ export default {
           message
         };
 
-        fetch(this.API_URL, {
+        fetch(`${this.API_URL}/comments`, {
           method: "POST",
           body: JSON.stringify(comment),
           headers: {
@@ -68,7 +68,7 @@ export default {
     },
     async getComments() {
       try {
-        const { data } = await axios.get(this.API_URL);
+        const { data } = await axios.get(`${this.API_URL}/comments`);
         const allComments = data.map(comment => comment);
         this.comments = [...allComments.reverse()];
       } catch (err) {
