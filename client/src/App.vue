@@ -3,6 +3,7 @@
     <Header v-bind:title="title"/>
     <PostComment v-bind:isInactive="isInactive" v-bind:postComment="postComment"/>
     <AllComments v-bind:comments="comments"/>
+    <Alert v-if="showAlert"/>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import Header from "./components/Header.vue";
 import PostComment from "./components/PostComment.vue";
 import AllComments from "./components/AllComments.vue";
+import Alert from "./components/Alert.vue";
 
 import axios from "axios";
 
@@ -18,16 +20,18 @@ export default {
   components: {
     Header,
     PostComment,
-    AllComments
+    AllComments,
+    Alert
   },
   data() {
     return {
       title: "WorldChat",
       API_URL:
-        // window.location.hostname === "localhost"
-        //   ? "http://localhost:5000"
-           "https://api-world-chat.now.sh",
+        window.location.hostname === "localhost"
+          ? "http://localhost:5000"
+          : "https://api-world-chat.now.sh",
       isInactive: false,
+      showAlert: false,
       comments: []
     };
   },
@@ -38,7 +42,11 @@ export default {
       const message = data.get("message");
 
       if (name.trim().length < 3 || message.trim().length < 3) {
-        // console.log("You must import message and name");
+        this.showAlert = true;
+
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 3000);
       } else {
         const comment = {
           name,
@@ -97,5 +105,10 @@ body,
 html {
   width: 100%;
   height: 100%;
+}
+
+h3 {
+  margin-bottom: 7px;
+  font-weight: 500;
 }
 </style>

@@ -20,14 +20,9 @@ export default {
 <style lang="scss" scoped>
 .comment {
   width: 100%;
-  height: 75px;
+  height: fit-content;
   padding: 10px;
   margin-bottom: 10px;
-}
-
-h3 {
-  margin-bottom: 7px;
-  font-weight: 500;
 }
 
 .date {
