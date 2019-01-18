@@ -2,9 +2,26 @@
   <div class="container" v-bind:class="{ inactive: isInactive }">
     <h2>Post a comment</h2>
 
-    <form @submit.prevent="postComment">
-      <input type="text" name="name" id="name" placeholder="Write your name...">
-      <textarea name="message" id="message" placeholder="Message..."></textarea>
+    <form @submit.prevent="formSubmitted">
+      <label class="i-line-chars">{{ 50 - name.length }}</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Write your name..."
+        maxlength="50"
+        v-model="name"
+      >
+      
+      <label class="t-line-chars">{{ 200 - message.length }}</label>
+      <textarea
+        name="message"
+        id="message"
+        placeholder="Message..."
+        maxlength="200"
+        v-model="message"
+      ></textarea>
+      
       <button type="submit">Post</button>
     </form>
 
@@ -18,6 +35,20 @@ export default {
   props: {
     postComment: Function,
     isInactive: Boolean
+  },
+  data() {
+    return {
+      name: "",
+      message: ""
+    };
+  },
+  methods: {
+    formSubmitted(e) {
+      this.postComment(e);
+
+      this.name = "";
+      this.message = "";
+    }
   }
 };
 </script>
@@ -36,13 +67,14 @@ h2 {
 form {
   width: 100%;
   height: fit-content;
+  position: relative;
 }
 
 input {
   width: 100%;
   height: 50px;
   border: 2px solid $grey;
-  border-radius: 25px;
+  border-radius: 10px;
   padding-left: 20px;
   margin-bottom: 15px;
   font-size: 16px;
@@ -53,7 +85,7 @@ textarea {
   width: 100%;
   height: 200px;
   border: 2px solid $grey;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 10px 20px;
   margin-bottom: 15px;
   font-size: 16px;
@@ -62,7 +94,7 @@ textarea {
 button {
   width: 180px;
   height: 40px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: inherit;
   border: 2px solid $primary;
   color: $primary;
@@ -75,6 +107,24 @@ button {
     border: 0;
     color: #fff;
   }
+}
+
+label {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 300;
+  transform: translate(-50%, -50%);
+  color: $grey;
+}
+
+.i-line-chars {
+  right: 2px;
+  top: 38px;
+}
+
+.t-line-chars {
+  right: 2px;
+  top: 252px;
 }
 
 .line {

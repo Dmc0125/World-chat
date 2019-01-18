@@ -77,7 +77,8 @@ export default {
           this.isInactive = false;
         }, 15000);
 
-        e.target.reset();
+        // e.target.reset();
+        this.$emit("form-reset");
       }
     },
     async getComments() {

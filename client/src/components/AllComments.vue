@@ -26,7 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 .comments {
-  width: 50%;
+  max-width: 50%;
   margin: 0 auto;
 }
 
@@ -34,13 +34,13 @@ export default {
 
 @include small() {
   .comments {
-    width: 90%;
+    max-width: 90%;
   }
 }
 
 @include medium-small() {
   .comments {
-    width: 80%;
+    max-width: 80%;
   }
 }
 </style>

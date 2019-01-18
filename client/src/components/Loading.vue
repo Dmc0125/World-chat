@@ -18,7 +18,7 @@ export default {
   &::before {
     animation: 1s linear infinite spinner;
     border: solid 5px $grey;
-    border-bottom-color: $primary;
+    border-bottom-color: $secondary;
     border-radius: 50%;
     content: "";
     height: 80px;
