@@ -66,4 +66,4 @@ app.post('/comments', (req, res) => {
   }
 });
 
-app.listen();
+app.listen(5000, console.log('Listening on http://localhost:5000'));

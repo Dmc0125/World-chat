@@ -12,7 +12,7 @@ The database is on:
 
 ### TODO Next
 
-[x] Show alert when name field or message have 0 chars
-[ ] Instead of Dates show how many secs/mins/days... they were created before
-[ ] Show how many letters are left in text area and input
-[ ] Show loader between posting a comment
+- [x] Show alert when name field or message have 0 chars
+- [ ] Instead of Dates show how many secs/mins/days... they were created before
+- [ ] Show how many letters are left in text area and input
+- [x] Show loader between posting a comment

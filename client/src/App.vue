@@ -2,7 +2,8 @@
   <div id="app">
     <Header v-bind:title="title"/>
     <PostComment v-bind:isInactive="isInactive" v-bind:postComment="postComment"/>
-    <AllComments v-bind:comments="comments"/>
+    <Loading v-if="isLoading"/>
+    <AllComments v-if="!isLoading" v-bind:comments="comments"/>
     <Alert v-if="showAlert"/>
   </div>
 </template>
@@ -12,6 +13,7 @@ import Header from "./components/Header.vue";
 import PostComment from "./components/PostComment.vue";
 import AllComments from "./components/AllComments.vue";
 import Alert from "./components/Alert.vue";
+import Loading from "./components/Loading.vue";
 
 import axios from "axios";
 
@@ -21,7 +23,8 @@ export default {
     Header,
     PostComment,
     AllComments,
-    Alert
+    Alert,
+    Loading
   },
   data() {
     return {
@@ -32,6 +35,7 @@ export default {
           : "https://api-world-chat.now.sh",
       isInactive: false,
       showAlert: false,
+      isLoading: true,
       comments: []
     };
   },
@@ -48,6 +52,8 @@ export default {
           this.showAlert = false;
         }, 3000);
       } else {
+        this.isLoading = true;
+
         const comment = {
           name,
           message
@@ -79,6 +85,7 @@ export default {
         const { data } = await axios.get(`${this.API_URL}/comments`);
         const allComments = data.map(comment => comment);
         this.comments = [...allComments.reverse()];
+        this.isLoading = false;
       } catch (err) {
         console.log(err);
       }
