@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header v-bind:title="title"/>
+    <Header v-bind:darkMode="darkMode" v-bind:title="title" v-on:switch-modes="darkMode = !darkMode"/>
     <PostComment v-bind:isInactive="isInactive" v-bind:postComment="postComment"/>
     <Loading v-if="isLoading"/>
     <AllComments v-if="!isLoading" v-bind:comments="comments"/>
@@ -33,6 +33,7 @@ export default {
         window.location.hostname === "localhost"
           ? "http://localhost:5000"
           : "https://api-world-chat.now.sh",
+      darkMode: false,
       isInactive: false,
       showAlert: false,
       isLoading: true,
