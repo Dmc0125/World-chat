@@ -1,24 +1,43 @@
-$primary: rgb(85, 207, 255);
-$secondary: rgb(253, 172, 51);
+$primary-light: rgb(85, 207, 255);
+$primary-dark: #1a212d;
+$secondary-dark: #3e4a5d;
+$header-dark: #232b39;
+$call-to-action: #d67171;
 $grey: rgb(214, 214, 214);
-$lighter-prim: lighten(
-  $color: $primary,
+
+$lighter-light: lighten(
+  $color: $call-to-action,
+  $amount: 15%,
+);
+$lighter-dark: lighten(
+  $color: $primary-light,
   $amount: 15%,
 );
 $lighter-grey: lighten(
   $color: $grey,
   $amount: 7%,
 );
+$darker-dark: darken(
+  $color: $secondary-dark,
+  $amount: 15%,
+);
+$darker-grey: darken(
+  $color: $grey,
+  $amount: 30%,
+); 
+
 @mixin small() {
   @media only screen and (max-width: 320px) {
     @content;
   }
 }
+
 @mixin medium-small() {
   @media only screen and (max-width: 720px) and (min-width: 321px) {
     @content;
   }
 }
+
 @mixin large() {
   @media only screen and (max-width: 1200px) and (min-width: 721px) {
     @content;

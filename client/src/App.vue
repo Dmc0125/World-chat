@@ -1,9 +1,13 @@
 <template>
-  <div id="app">
-    <Header v-bind:darkMode="darkMode" v-bind:title="title" v-on:switch-modes="darkMode = !darkMode"/>
-    <PostComment v-bind:isInactive="isInactive" v-bind:postComment="postComment"/>
+  <div id="app" v-bind:class="{ 'dark-mode': darkMode }">
+    <Header
+      v-bind:darkMode="darkMode"
+      v-bind:title="title"
+      v-on:switch-modes="darkMode = !darkMode"
+    />
+    <PostComment v-bind:darkMode="darkMode" v-bind:isInactive="isInactive" v-bind:postComment="postComment"/>
     <Loading v-if="isLoading"/>
-    <AllComments v-if="!isLoading" v-bind:comments="comments"/>
+    <AllComments v-if="!isLoading" v-bind:comments="comments" v-bind:darkMode="darkMode"/>
     <Alert v-if="showAlert"/>
   </div>
 </template>
@@ -33,7 +37,7 @@ export default {
         window.location.hostname === "localhost"
           ? "http://localhost:5000"
           : "https://api-world-chat.now.sh",
-      darkMode: false,
+      darkMode: true,
       isInactive: false,
       showAlert: false,
       isLoading: true,
@@ -113,11 +117,21 @@ export default {
 body,
 html {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 
 h3 {
   margin-bottom: 7px;
   font-weight: 500;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+// DARKMODE
+
+.dark-mode {
+  background-color: $primary-dark;
 }
 </style>

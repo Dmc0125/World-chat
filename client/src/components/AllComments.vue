@@ -6,6 +6,7 @@
       v-bind:name="name"
       v-bind:message="message"
       v-bind:created="createdAt"
+      v-bind:darkMode="darkMode"
     />
   </div>
 </template>
@@ -19,7 +20,8 @@ export default {
     Comment
   },
   props: {
-    comments: Array
+    comments: Array,
+    darkMode: Boolean
   }
 };
 </script>

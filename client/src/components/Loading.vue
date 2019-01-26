@@ -14,11 +14,12 @@ export default {
   opacity: 1;
   position: relative;
   transition: opacity linear 0.1s;
+  background-color: inherit;
 
   &::before {
     animation: 1s linear infinite spinner;
     border: solid 5px $grey;
-    border-bottom-color: $secondary;
+    border-bottom-color: $call-to-action;
     border-radius: 50%;
     content: "";
     height: 80px;

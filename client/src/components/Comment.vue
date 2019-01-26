@@ -1,5 +1,5 @@
 <template>
-  <div class="comment">
+  <div class="comment" v-bind:class="{ 'dark-mode': darkMode }">
     <h3>{{ name }}</h3>
     <p>{{ message }}</p>
     <p class="date">{{ created | moment("YYYY-MM-DD HH:mm") }}</p>
@@ -12,7 +12,8 @@ export default {
   props: {
     name: String,
     message: String,
-    created: String
+    created: String,
+    darkMode: Boolean
   }
 };
 </script>
@@ -34,5 +35,17 @@ export default {
 p,
 h3 {
   word-wrap: break-word;
+}
+
+// DARK MODE
+
+.dark-mode {
+  h3 {
+    color: #fff;
+  }
+
+  p {
+    color: $lighter-grey;
+  }
 }
 </style>

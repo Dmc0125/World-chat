@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-bind:class="{ inactive: isInactive }">
+  <div class="container" v-bind:class="{ 'inactive': isInactive, 'dark-mode': darkMode }">
     <h2>Post a comment</h2>
 
     <form @submit.prevent="formSubmitted">
@@ -34,7 +34,8 @@ export default {
   name: "PostComment",
   props: {
     postComment: Function,
-    isInactive: Boolean
+    isInactive: Boolean,
+    darkMode: Boolean
   },
   data() {
     return {
@@ -96,14 +97,14 @@ button {
   height: 40px;
   border-radius: 10px;
   background-color: inherit;
-  border: 2px solid $primary;
-  color: $primary;
+  border: 2px solid $call-to-action;
+  color: $call-to-action;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
 
   &:hover {
-    background-color: $primary;
+    background-color: $call-to-action;
     border: 0;
     color: #fff;
   }
@@ -145,12 +146,59 @@ label {
 
   button {
     pointer-events: none;
-    border: $lighter-prim 2px solid;
-    color: $lighter-prim;
+    border: $lighter-light 2px solid;
+    color: $lighter-light;
   }
 
   ::placeholder {
     color: $lighter-grey;
+  }
+}
+
+// DARK MODE
+
+.dark-mode {
+  h2 {
+    color: #fff;
+  }
+
+  input,
+  textarea {
+    background-color: $secondary-dark;
+    border: 0;
+    color: #fff;
+  }
+
+  button {
+    border-color: $primary-light;
+    color: $primary-light;
+
+    &:hover {
+      background-color: $primary-light;
+      border: 0;
+      color: $primary-dark;
+    }
+  }
+
+  .line {
+    background-color: $secondary-dark;
+  }
+
+  .inactive {
+    input,
+    textarea {
+      border: 0;
+      background-color: $darker-dark;
+    }
+
+    button {
+      border: $lighter-dark 2px solid;
+      color: $lighter-dark;
+    }
+
+    ::placeholder {
+      color: $darker-grey;
+    }
   }
 }
 
@@ -177,6 +225,16 @@ label {
   button {
     width: 100px;
     font-size: 14px;
+  }
+
+  .i-line-chars {
+    right: 2px;
+    top: 28px;
+  }
+
+  .t-line-chars {
+    right: 2px;
+    top: 242px;
   }
 }
 
