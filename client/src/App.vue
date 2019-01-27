@@ -5,7 +5,11 @@
       v-bind:title="title"
       v-on:switch-modes="darkMode = !darkMode"
     />
-    <PostComment v-bind:darkMode="darkMode" v-bind:isInactive="isInactive" v-bind:postComment="postComment"/>
+    <PostComment
+      v-bind:darkMode="darkMode"
+      v-bind:isInactive="isInactive"
+      v-bind:postComment="postComment"
+    />
     <Loading v-if="isLoading"/>
     <AllComments v-if="!isLoading" v-bind:comments="comments" v-bind:darkMode="darkMode"/>
     <Alert v-if="showAlert"/>
@@ -81,16 +85,13 @@ export default {
         setTimeout(() => {
           this.isInactive = false;
         }, 15000);
-
-        // e.target.reset();
-        this.$emit("form-reset");
       }
     },
     async getComments() {
       try {
-        const { data } = await axios.get(`${this.API_URL}/comments`);
-        const allComments = data.map(comment => comment);
-        this.comments = [...allComments.reverse()];
+        const { data: { comments } } = await axios.get(`${this.API_URL}/comments`);
+        const allComments = comments.map(comment => comment);
+        this.comments = [...allComments];
         this.isLoading = false;
       } catch (err) {
         console.log(err);

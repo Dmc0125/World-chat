@@ -23,7 +23,23 @@ app.get('/', (req, res) => {
 
 // get comments from database to /comments route
 app.get('/comments', (req, res) => {
-  comments.find().then(posts => res.json(posts));
+  const { sort = 'desc' } = req.query;
+
+  comments
+    .find(
+      {},
+      {
+        sort: {
+          createdAt: sort === 'desc' ? -1 : sort === 'asc' ? 1 : -1,
+        },
+      }
+    )
+    .then(comments =>
+      res.json({
+        sort,
+        comments,
+      })
+    );
 });
 
 app.use(

@@ -17,3 +17,6 @@ The database is on:
 - [x] Show how many letters are left in text area and input
 - [x] Show loader between posting a comment
 - [x] Add option to switch to dark mode
+- [ ] Add login system
+- [x] Sort database by dates instead of reverse()
+  - [ ] Add option to show comments by filter
