@@ -12,6 +12,7 @@ The database is on:
 
 ### TODO Next
 
+- [x] Refactor get and post functions from App.vue
 - [x] Show alert when name field or message have 0 chars
 - [ ] Instead of Dates show how many secs/mins/days... they were created before
 - [x] Show how many letters are left in text area and input

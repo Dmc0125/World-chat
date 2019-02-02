@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": ["world-chat"],
   "builds": [
     {
       "src": "package.json",

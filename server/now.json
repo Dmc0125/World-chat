@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "alias": ["api-world-chat"],
+  "env": {
+    "MONGO_URI": "@comments-db"
+  },
   "builds": [
     {
       "src": "index.js",

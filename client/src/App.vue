@@ -23,7 +23,7 @@ import AllComments from "./components/AllComments.vue";
 import Alert from "./components/Alert.vue";
 import Loading from "./components/Loading.vue";
 
-import axios from "axios";
+import { get, post } from "./API";
 
 export default {
   name: "app",
@@ -37,10 +37,6 @@ export default {
   data() {
     return {
       title: "WorldChat",
-      API_URL:
-        window.location.hostname === "localhost"
-          ? "http://localhost:5000"
-          : "https://api-world-chat.now.sh",
       darkMode: true,
       isInactive: false,
       showAlert: false,
@@ -68,34 +64,21 @@ export default {
           message
         };
 
-        fetch(`${this.API_URL}/comments`, {
-          method: "POST",
-          body: JSON.stringify(comment),
-          headers: {
-            "content-type": "application/json"
-          }
-        })
-          .then(res => res.json())
-          .catch(err => console.log(err))
-          .then(() => {
-            this.getComments();
-            this.isInactive = true;
-          });
+        post(comment).then(() => {
+          this.getComments();
+          this.isInactive = true;
+        });
 
         setTimeout(() => {
           this.isInactive = false;
         }, 15000);
       }
     },
-    async getComments() {
-      try {
-        const { data: { comments } } = await axios.get(`${this.API_URL}/comments`);
-        const allComments = comments.map(comment => comment);
-        this.comments = [...allComments];
+    getComments() {
+      get().then(comments => {
+        this.comments = [...comments];
         this.isLoading = false;
-      } catch (err) {
-        console.log(err);
-      }
+      });
     }
   },
   mounted() {
