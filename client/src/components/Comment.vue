@@ -1,5 +1,5 @@
 <template>
-  <div class="comment" v-bind:class="{ 'dark-mode': darkMode }">
+  <div class="comment" :class="{ 'dark-mode': darkMode }">
     <h3>{{ name }}</h3>
     <p>{{ message }}</p>
     <p class="date">{{ created | moment("YYYY-MM-DD HH:mm") }}</p>

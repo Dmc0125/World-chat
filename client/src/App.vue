@@ -1,17 +1,17 @@
 <template>
-  <div id="app" v-bind:class="{ 'dark-mode': darkMode }">
+  <div id="app" :class="{ 'dark-mode': darkMode }">
     <Header
-      v-bind:darkMode="darkMode"
-      v-bind:title="title"
-      v-on:switch-modes="darkMode = !darkMode"
+      :darkMode="darkMode"
+      :title="title"
+      @switch-modes="darkMode = !darkMode"
     />
     <PostComment
-      v-bind:darkMode="darkMode"
-      v-bind:isInactive="isInactive"
-      v-bind:postComment="postComment"
+      :darkMode="darkMode"
+      :isInactive="isInactive"
+      :postComment="postComment"
     />
     <Loading v-if="isLoading"/>
-    <AllComments v-if="!isLoading" v-bind:comments="comments" v-bind:darkMode="darkMode"/>
+    <AllComments v-if="!isLoading" :comments="comments" :darkMode="darkMode"/>
     <Alert v-if="showAlert"/>
   </div>
 </template>
@@ -41,11 +41,11 @@ export default {
       isInactive: false,
       showAlert: false,
       isLoading: true,
-      comments: []
+      comments: [],
     };
   },
   methods: {
-    postComment(e) {
+    async postComment(e) {
       const data = new FormData(e.target);
       const name = data.get("name");
       const message = data.get("message");
@@ -56,33 +56,38 @@ export default {
         setTimeout(() => {
           this.showAlert = false;
         }, 3000);
-      } else {
-        this.isLoading = true;
 
-        const comment = {
-          name,
-          message
-        };
-
-        post(comment).then(() => {
-          this.getComments();
-          this.isInactive = true;
-        });
-
-        setTimeout(() => {
-          this.isInactive = false;
-        }, 15000);
+        return;
       }
+
+      this.isLoading = true;
+
+      const comment = {
+        name,
+        message
+      };
+
+      await post(comment);
+
+      console.log(this.comments);
+      this.comments = await this.getComments();
+
+      this.isLoading = false;
+      this.isInactive = true;
+
+      setTimeout(() => {
+        this.isInactive = false;
+      }, 15000);
     },
-    getComments() {
-      get().then(comments => {
-        this.comments = [...comments];
-        this.isLoading = false;
-      });
+    async getComments() {
+      const response = await get();
+
+      return response;
     }
   },
-  mounted() {
-    this.getComments();
+  async mounted() {
+    this.comments = await this.getComments();
+    this.isLoading = false;
   }
 };
 </script>

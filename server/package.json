@@ -12,13 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bad-words": "^3.0.0",
+    "bad-words": "^3.0.3",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "express-rate-limit": "^3.3.2",
-    "monk": "^6.0.6"
+    "express": "^4.17.1",
+    "express-rate-limit": "^3.5.3",
+    "monk": "^6.0.6",
+    "volleyball": "^1.5.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.19.4"
   }
 }

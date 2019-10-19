@@ -1,5 +1,5 @@
 <template>
-  <header v-bind:class="{ 'dark-mode': darkMode, 'menu-opened': isOpened }">
+  <header :class="{ 'dark-mode': darkMode, 'menu-opened': isOpened }">
     <h1>{{ title }}</h1>
     <div class="switch-modes">
       <h4>Dark mode</h4>

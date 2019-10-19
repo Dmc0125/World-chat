@@ -3,6 +3,7 @@ const monk = require('monk');
 const cors = require('cors');
 const Filter = require('bad-words');
 const rateLimit = require('express-rate-limit');
+const volleyball = require('volleyball');
 
 const app = express();
 
@@ -14,33 +15,7 @@ app.enable('trust proxy');
 
 app.use(cors());
 app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Database for Comment posting app',
-  });
-});
-
-// get comments from database to /comments route
-app.get('/comments', (req, res) => {
-  const { sort = 'desc' } = req.query;
-
-  comments
-    .find(
-      {},
-      {
-        sort: {
-          createdAt: sort === 'desc' ? -1 : sort === 'asc' ? 1 : -1,
-        },
-      }
-    )
-    .then(comments =>
-      res.json({
-        sort,
-        comments,
-      })
-    );
-});
+app.use(volleyball);
 
 app.use(
   rateLimit({
@@ -49,17 +24,33 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Database for Comment posting app',
+  });
+});
+
+// get comments from database to /comments route
+app.get('/comments', async (req, res) => {
+  const { sort = 'desc' } = req.query;
+
+  const postedComments = await comments.find({}, { sort: { createdAt: sort === 'desc' ? -1 : 1 } });
+
+  res.json({
+    sort,
+    comments: postedComments,
+  });
+});
+
 // checks if comment is valid
 const isValid = comment => {
   const { name, message } = comment;
-  return name &&
-    name.toString().trim().length > 2 &&
-    name.toString().length <= 50 &&
-    message &&
-    message.toString().trim().length > 2 &&
-    message.toString().length <= 200
-    ? true
-    : false;
+  return name
+    && name.toString().trim().length > 2
+    && name.toString().length <= 50
+    && message
+    && message.toString().trim().length > 2
+    && message.toString().length <= 200
 };
 
 // send/insert a comment to a database
@@ -82,4 +73,6 @@ app.post('/comments', (req, res) => {
   }
 });
 
-app.listen(5000, console.log('Listening on http://localhost:5000'));
+const port = process.env.PORT || 5000;
+
+app.listen(port, console.log('Listening on http://localhost:' + port));

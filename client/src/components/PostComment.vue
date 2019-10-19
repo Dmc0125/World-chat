@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-bind:class="{ 'inactive': isInactive, 'dark-mode': darkMode }">
+  <div class="container" :class="{ 'inactive': isInactive, 'dark-mode': darkMode }">
     <h2>Post a comment</h2>
 
     <form @submit.prevent="formSubmitted">
